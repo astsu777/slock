@@ -1,5 +1,5 @@
 #!/bin/sh
-if type i33lock > /dev/null 2>&1; then
+if type i3lock > /dev/null 2>&1; then
 	B='#000000'  # blank
 	C='#111111'  # clear ish
 	D='#333333'  # default
