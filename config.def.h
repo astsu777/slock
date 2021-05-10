@@ -23,8 +23,8 @@ static const char * font_name = "fixed";
 /*Enable blur*/
 #define BLUR
 /*Set blur radius*/
-static const int blurRadius=20;
+static const int blurRadius=50;
 /*Enable Pixelation*/
-//#define PIXELATION
+#define PIXELATION
 /*Set pixelation radius*/
-static const int pixelSize=5;
+static const int pixelSize=20;
