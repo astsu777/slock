@@ -3,28 +3,22 @@ static const char *user  = "nobody";
 static const char *group = "nobody";
 
 static const char *colorname[NUMCOLS] = {
-	[INIT] =   "#000000",     /* after initialization */
-	[INPUT] =  "#282c34",   /* during input */
-	[FAILED] = "#CC3333",   /* wrong password */
+	[INIT] =   "#333333",     /* after initialization */
+	[INPUT] =  "#004466",   /* during input */
+	[FAILED] = "#660000",   /* wrong password */
 };
 
 /* treat a cleared input like a wrong password (color) */
 static const int failonclear = 1;
 
+/* allow control key to trigger fail on clear */
+static const int controlkeyclear = 1;
+
 /* default message */
-static const char * message = "Enter password to unlock screen";
+static const char * message = "Enter password to unlock the screen";
 
 /* text color */
-static const char * text_color = "#abb2bf";
+static const char * text_color = "#e5e6e5";
 
 /* text size (must be a valid size) */
 static const char * font_name = "fixed";
-
-/*Enable blur*/
-#define BLUR
-/*Set blur radius*/
-static const int blurRadius=50;
-/*Enable Pixelation*/
-#define PIXELATION
-/*Set pixelation radius*/
-static const int pixelSize=20;
