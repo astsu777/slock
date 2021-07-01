@@ -1,6 +1,6 @@
 # My build of slock v1.4
 
-![](https://hostr.co/file/C9xklJPPqSHS/screenshot_20210417-015.png)
+![](https://i.postimg.cc/5y2c9tDF/screenshot-20210417-015.png)
 
 This repository hosts the source code of my build of *slock* (Simple X display locker) made by [Suckless software](https://tools.suckless.org/slock/). It is based on *slock* v1.4 and different patches have been applied in order to provide the features I like. The list of applied patches can be found in the *patches* folder. It features:
 
