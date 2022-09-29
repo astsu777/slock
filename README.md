@@ -12,12 +12,12 @@ This repository hosts the source code of my build of *slock* (Simple X display l
 You simply need to download this repository, compile the sources and install the binaries. Type the following commands:
 
 ```
-git clone --depth 1 https://github.com/GSquad934/slock.git
+git clone --depth 1 https://github.com/astsu777/slock.git
 cd slock
 sudo make clean install
 ```
 
-<u>**Note**</u>: this lock screen installation is automated when installing an X environment with my [bootstrap script](https://github.com/GSquad934/bootstrap).
+<u>**Note**</u>: this lock screen installation is automated when installing an X environment with my [bootstrap script](https://github.com/astsu777/bootstrap).
 
 # Usage
 Simply execute *slock* command to trigger the lock screen. It can easily be bound to a keybinding to make life easier, or it can also be used with an X automation tool to trigger this lock screen after a certain amount of time.
@@ -33,5 +33,5 @@ If the password is wrong, the lock screen will turn red:
 # Contact
 You can always reach out to me:
 
-* [Twitter](https://twitter.com/gaetanict)
+* [Twitter](https://twitter.com/astsu777)
 * [Email](mailto:gaetan@ictpourtous.com)
