@@ -1,11 +1,11 @@
-# My build of slock v1.4
+# My build of slock v1.5
 
 ![](https://i.postimg.cc/L4g668VY/screenshot-20210702-023.png)
 
 This repository hosts the source code of my build of *slock* (Simple X display locker) made by [Suckless software](https://tools.suckless.org/slock/). It is based on *slock* v1.4 and different patches have been applied in order to provide the features I like. The list of applied patches can be found in the *patches* folder. It features:
 
 * Display a custom message to prompt user to enter password
-* Changing colors: grey when locked, blue when typing password and red if wrong password
+* Changing colors: grey when locked, blue when typing password and red if wrong password (orange if *Caps Lock* is activated)
 * Can be automated using tools such as *xautolock*
 
 # Installation
@@ -29,6 +29,8 @@ When a password is being typed, the color of the lock screen changes to blue:
 If the password is wrong, the lock screen will turn red:
 
 ![](https://i.postimg.cc/L6d4qFyy/screenshot-20210702-025.png)
+
+<u>**Note**</u>: if the color screen is orange, it means the *Caps Lock* key is activated.
 
 # Contact
 You can always reach out to me:

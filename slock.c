@@ -19,6 +19,7 @@
 #include <X11/keysym.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <X11/XKBlib.h>
 
 #include "arg.h"
 #include "util.h"
@@ -32,6 +33,7 @@ enum {
 	INIT,
 	INPUT,
 	FAILED,
+	CAPS,
 	NUMCOLS
 };
 
@@ -260,15 +262,19 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 {
 	XRRScreenChangeNotifyEvent *rre;
 	char buf[32], passwd[256], *inputhash;
-	int num, screen, running, failure, oldc;
-	unsigned int len, color;
+	int caps, num, screen, running, failure, oldc;
+	unsigned int len, color, indicators;
 	KeySym ksym;
 	XEvent ev;
 
 	len = 0;
+	caps = 0;
 	running = 1;
 	failure = 0;
 	oldc = INIT;
+
+	if (!XkbGetIndicatorState(dpy, XkbUseCoreKbd, &indicators))
+		caps = indicators & 1;
 
 	while (running && !XNextEvent(dpy, &ev)) {
 		if (ev.type == KeyPress) {
@@ -307,18 +313,20 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 				break;
 			case XK_BackSpace:
 				if (len)
-					passwd[len--] = '\0';
+					passwd[--len] = '\0';
+				break;
+			case XK_Caps_Lock:
+				caps = !caps;
 				break;
 			default:
-				if (controlkeyclear && iscntrl((int)buf[0]))
-					continue;
-				if (num && (len + num < sizeof(passwd))) {
+				if (num && !iscntrl((int)buf[0]) &&
+				    (len + num < sizeof(passwd))) {
 					memcpy(passwd + len, buf, num);
 					len += num;
 				}
 				break;
 			}
-			color = len ? INPUT : ((failure || failonclear) ? FAILED : INIT);
+			color = len ? (caps ? CAPS : INPUT) : (failure || failonclear ? FAILED : INIT);
 			if (running && oldc != color) {
 				for (screen = 0; screen < nscreens; screen++) {
 					XSetWindowBackground(dpy,
@@ -333,13 +341,21 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 			rre = (XRRScreenChangeNotifyEvent*)&ev;
 			for (screen = 0; screen < nscreens; screen++) {
 				if (locks[screen]->win == rre->window) {
-					XResizeWindow(dpy, locks[screen]->win,
-					              rre->width, rre->height);
+					if (rre->rotation == RR_Rotate_90 ||
+					    rre->rotation == RR_Rotate_270)
+						XResizeWindow(dpy, locks[screen]->win,
+						              rre->height, rre->width);
+					else
+						XResizeWindow(dpy, locks[screen]->win,
+						              rre->width, rre->height);
 					XClearWindow(dpy, locks[screen]->win);
+					break;
 				}
 			}
-		} else for (screen = 0; screen < nscreens; screen++)
-			XRaiseWindow(dpy, locks[screen]->win);
+		} else {
+			for (screen = 0; screen < nscreens; screen++)
+				XRaiseWindow(dpy, locks[screen]->win);
+		}
 	}
 }
 
